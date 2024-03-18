@@ -1,4 +1,4 @@
-from multiprocessing import Process
+from multiprocessing import Pool, current_process, Process
 from time import time
 
 
@@ -23,27 +23,32 @@ if __name__ == "__main__":
     numbers = [128, 255, 99999, 10651060]
     processes = []
     
-    for num in numbers:
-        pr = Process(target=factorize, args=(num,))
-        pr.start()
-        processes.append(pr)
+    with Pool(processes=4) as pool:
+        print(f'{pool.map(factorize, numbers)}')
         
-    for pr in processes:
-        pr.join()
     
-    for pr in processes:
-        print(pr)
+    # ------------ Test Proccessing
+    # for num in numbers:
+    #     pr = Process(target=factorize, args=(num,))
+    #     pr.start()
+    #     processes.append(pr)
+        
+    # for pr in processes:
+    #     pr.join()
+    
+    # for pr in processes:
+    #     print(pr)
 
 #  -------------------------- Test
-    a = factorize(128)
-    b = factorize(255)
-    c = factorize(99999)
-    d = factorize(10651060)
+    # a = factorize(128)
+    # b = factorize(255)
+    # c = factorize(99999)
+    # d = factorize(10651060)
 
-    print(a)
-    print(b)
-    print(c)
-    print(d)
+    # print(a)
+    # print(b)
+    # print(c)
+    # print(d)
 
 # assert a == [1, 2, 4, 8, 16, 32, 64, 128]
 # assert b == [1, 3, 5, 15, 17, 51, 85, 255]
